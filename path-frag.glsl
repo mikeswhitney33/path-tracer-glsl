@@ -53,9 +53,9 @@ float intersect_sphere(vec3 orig, vec3 dir, vec3 center, float rad2) {
     float t0, t1;
     vec3 L = center - orig;
     float tca = dot(L, dir);
-    if(tca < 0) return -1;
+    if(tca < 0) return -1.0;
     float d2 = dot(L, L) - tca * tca;
-    if(d2 > rad2) return -1;
+    if(d2 > rad2) return -1.0;
     float thc = sqrt(rad2 - d2);
     t0 = tca - thc;
     t1 = tca + thc;
@@ -99,7 +99,7 @@ float noise(vec2 co){
  * returns: the color collected by the ray
  */
 vec3 traceRay(vec3 orig, vec3 dir) {
-    float t;
+    float t = 0;
     int id = 0;
 
 
@@ -182,20 +182,6 @@ vec3 traceRay(vec3 orig, vec3 dir) {
 
 
     }
-}
-
-/**
- * preprocessing: normalizes a pixel value to avoid saturation
- *
- * x: the input pixel
- *
- * return: the normalized pixel
- */
-vec3 preprocess(vec3 x) {
-    vec3 c = clamp(x, 0, 1);
-    float pwd = 1/2.2;
-    vec3 p = vec3(pow(c.x,pwd), pow(c.y, pwd), pow(c.z, pwd));
-    return (p * 255 + 0.5) / 255.0;
 }
 
 /**
